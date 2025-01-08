@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { addNewTask } from "../controllers/task.controller.js";
+import {
+    addNewTask,
+    pendingTask,
+    updateTask,
+} from "../controllers/task.controller.js";
 
 const router = Router();
 
@@ -7,5 +11,15 @@ const router = Router();
 //Add a new task
 
 router.get("/", addNewTask);
+
+///View Pending Tasks:
+
+router.get("/pending", pendingTask);
+
+///tasks/:id/status
+router.post("/:id/status", updateTask);
+
+///tasks/sort/by-priority
+router.get("/sort/by-priority", taskByPriority);
 
 export default router;

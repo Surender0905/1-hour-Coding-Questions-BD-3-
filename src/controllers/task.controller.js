@@ -30,4 +30,40 @@ const addNewTask = (req, res) => {
     });
 };
 
-export { addNewTask };
+const pendingTask = (req, res) => {
+    const result = tasks.filter((task) => {
+        task.status === "open";
+    });
+
+    res.status(200).json({
+        status: true,
+        tasks: result,
+    });
+};
+
+//update task
+
+const updateTask = (req, res) => {
+    const id = req.params.id;
+    const { status } = req.body;
+
+    if (status) {
+        return res.status(404).json({
+            status: false,
+            message: "Error status not found",
+        });
+    }
+
+    const task = tasks.find((task) => task.id === id);
+
+    task.status = status;
+
+    res.status(200).json({
+        status: true,
+        message: "Task updated successfully",
+    });
+};
+
+const taskByPriority = (req, res) => {};
+
+export { addNewTask, pendingTask, updateTask, taskByPriority };
