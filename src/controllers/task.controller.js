@@ -31,9 +31,7 @@ const addNewTask = (req, res) => {
 };
 
 const pendingTask = (req, res) => {
-    const result = tasks.filter((task) => {
-        task.status === "open";
-    });
+    const result = tasks.filter((task) => task.status === "open");
 
     res.status(200).json({
         status: true,
@@ -56,14 +54,26 @@ const updateTask = (req, res) => {
 
     const task = tasks.find((task) => task.id === id);
 
-    task.status = status;
+    if (task) {
+        task.status = status;
+        res.json({ message: "Task status updated successfully", task });
+    } else {
+        res.status(404).json({ message: "Task not found" });
+    }
+};
+
+const taskByPriority = (req, res) => {
+    const priorityOrder = { high: 1, medium: 2, low: 3 };
+
+    ///after task submission
+    const sortedTasks = tasks.sort(
+        (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority],
+    );
 
     res.status(200).json({
         status: true,
-        message: "Task updated successfully",
+        tasks: sortedTasks,
     });
 };
-
-const taskByPriority = (req, res) => {};
 
 export { addNewTask, pendingTask, updateTask, taskByPriority };
