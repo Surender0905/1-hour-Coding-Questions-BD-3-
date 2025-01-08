@@ -1,7 +1,7 @@
 import tasks from "../data/data.js";
 
 const getAllByUser = (req, res) => {
-    const user = req.query;
+    const user = req.params;
 
     if (user) {
         res.status(404).json({

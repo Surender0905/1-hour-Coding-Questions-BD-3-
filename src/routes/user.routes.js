@@ -3,6 +3,6 @@ import { getAllByUser } from "../controllers/user.controller";
 
 const router = Router();
 
-router.get("/", getAllByUser);
+router.get("/:name/tasks", getAllByUser);
 
 export default router;
